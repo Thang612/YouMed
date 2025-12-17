@@ -1,7 +1,10 @@
 'use client'
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Guied from "./Component/Guied";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "./Service/firebase";
+import Search from "./Component/Search";
 
 const heroSectionImg = ["/herosection/doctor (1).webp", "/herosection/doctor (2).webp", "/herosection/doctor (3).webp"]
 const mainTele = "/herosection/main-tele.svg"
@@ -37,6 +40,18 @@ const icon = [{
   image: "/icon/gastroenterology.svg"
 }]
 export default function Home() {
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setUser(user)
+      setLoading(false)
+    })
+    return () => unsub()
+  }, [])
+
+
   const [isReadMore, setIsReadMore] = useState(true)
 
 
@@ -105,6 +120,8 @@ export default function Home() {
         </div>
       </div>
 
+      <Search/>
+
       <div className="container mx-auto mt-16 ">
         <h2 className="text-3xl text-center font-bold">Hơn 20 chuyên khoa tư vấn</h2>
         <p className="text-center mt-2">Kết nối với các bác sĩ đầu ngành trong các chuyên khoa dễ dàng và tiện lợi</p>
@@ -122,7 +139,7 @@ export default function Home() {
             )
           })}
         </div>
-        <div className="w-full flex justify-center mt-5"> <button onClick={()=>{setIsReadMore(!isReadMore)}} className="mx-auto inline-flex items-center gap-3 text-blue-500"><i className={`${isReadMore && 'rotate-180'}   text-2xl duration-500 fa-solid fa-circle-arrow-up`}></i>Xem thêm</button> </div>
+        <div className="w-full flex justify-center mt-5 "> <button onClick={() => { setIsReadMore(!isReadMore) }} className="mx-auto inline-flex items-center gap-3 text-blue-500 cursor-pointer  "><i className={`${isReadMore && 'rotate-180'}   text-2xl duration-500 fa-solid fa-circle-arrow-up`}></i>Xem thêm</button> </div>
       </div>
 
       <Guied />

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { createUser } from "../Service/auth.service"
 import { useRouter } from "next/navigation"
 import Spinner from "../Component/Spinner"
+import { toast } from "react-toastify"
 
 const Register = () => {
     const router = useRouter()
@@ -31,6 +32,7 @@ const Register = () => {
             setIsLoading(true);
             const res = await createUser({ email, password });
             if (res) {
+                toast.success("Đăng ký thông tin thành công!!!")
                 router.push('/')
             }
         } catch (error) {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { loginUser } from "../Service/auth.service";
 import { useRouter } from "next/navigation";
 import Spinner from "../Component/Spinner";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const router = useRouter()
@@ -21,6 +22,7 @@ const Login = () => {
             const res = await loginUser({ email, password });
             if (res) {
                 router.push('/')
+                toast.success("Đăng nhập thành công!!!")
             }
         } catch (error) {
             if (error instanceof Error) {

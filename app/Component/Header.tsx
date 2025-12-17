@@ -1,26 +1,17 @@
 'use client'
 import Image from "next/image"
 import Link from "next/link";
-import { auth } from "../Service/firebase";
-import { useEffect, useState } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
+import {  useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../context/AuthContext";
+import { logoutUser } from "../Service/auth.service";
 
-// Giả định logo YouMed được đặt trong thư mục public và được import (hoặc chỉ định đường dẫn)
-// Nếu bạn đặt file logo.png trong public/images/, bạn có thể dùng đường dẫn '/images/youmed-logo.png'
-const YOUMED_LOGO_PATH = "/logo.svg"; // THAY ĐỔI ĐƯỜNG DẪN NÀY
+const YOUMED_LOGO_PATH = "/logo.svg"; 
 
 const Header = () => {
-    const [user, setUser] = useState<User | null>(null)
-    const [loading, setLoading] = useState(true)
-
-
-    useEffect(() => {
-        const unsub = onAuthStateChanged(auth, (user) => {
-            setUser(user)
-            setLoading(false)
-        })
-        return () => unsub()
-    }, [])
+    const {user, loading} = useAuth()
+    const route = useRouter();
+    const [isOpenUser, setIsOpenUser] = useState(false);
 
     if (loading) return null // hoặc skeleton
     return (
@@ -47,27 +38,28 @@ const Header = () => {
                     <a href="/service" className="text-gray-600 hover:text-blue-500 font-medium transition duration-150">Dịch vụ</a>
                     <a href="/doctors" className="text-gray-600 hover:text-blue-500 font-medium transition duration-150">Bác sĩ</a>
                     <a href="/hospitals" className="text-gray-600 hover:text-blue-500 font-medium transition duration-150">Bệnh viện</a>
-                    {/* Thêm các mục menu khác tại đây */}
                 </nav>
 
                 <div className="flex items-center gap-4">
                     {!user ? (
                         <>
                             <Link href="/login">Đăng nhập</Link>
-
                         </>
                     ) : (
                         <>
-                            <span className="text-gray-600">
-                                Xin chào {user.email}
-                            </span>
+                            <div onClick={()=>setIsOpenUser(!isOpenUser)} className="relative text-gray-600 gap-2 flex items-center cursor-pointer">
+                                <i className="fa-solid fa-hospital-user"></i>
+                                Xin chào 
+                                {isOpenUser && <div className="p-1 cursor-pointer rounded absolute bottom-0 left-0 w-full translate-y-full bg-white flex flex-col">
+                                    <div className="hover:bg-gray-200 px-4 py-2" onClick={()=>{route.push('/profile')}}>Profile</div>
+                                    <hr className="text-gray-400" />
+                                    <div className="hover:bg-gray-200 px-4 py-2" onClick={logoutUser}>Logout</div>
+                                </div>}
+                            </div>
 
                         </>
                     )}
-                    <Link
-                        href="/register"
-                        className="px-4 py-2 rounded-md text-white bg-blue-500"
-                    >
+                    <Link href="/register" className="px-4 py-2 rounded-md text-white bg-blue-500">
                         Tư vấn Trực tuyến
                     </Link>
                 </div>

@@ -1,8 +1,4 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  User,
-} from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User } from 'firebase/auth'
 import { auth } from './firebase'
 import { FirebaseError } from 'firebase/app'
 
@@ -24,15 +20,9 @@ const parseFirebaseError = (error: FirebaseError) =>
   'Đã xảy ra lỗi, vui lòng thử lại'
 
 /* REGISTER */
-export const createUser = async (
-  login: LoginPayload
-): Promise<User> => {
+export const createUser = async (login: LoginPayload): Promise<User> => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      login.email,
-      login.password
-    )
+    const userCredential = await createUserWithEmailAndPassword(auth, login.email, login.password)
 
     return userCredential.user
   } catch (error) {
@@ -44,16 +34,9 @@ export const createUser = async (
 }
 
 /* LOGIN */
-export const loginUser = async (
-  login: LoginPayload
-): Promise<User> => {
+export const loginUser = async (login: LoginPayload): Promise<User> => {
   try {
-    const res = await signInWithEmailAndPassword(
-      auth,
-      login.email,
-      login.password
-    )
-
+    const res = await signInWithEmailAndPassword(auth, login.email, login.password)
     return res.user
   } catch (error) {
     if (error instanceof FirebaseError) {
@@ -61,4 +44,9 @@ export const loginUser = async (
     }
     throw new Error('Lỗi không xác định')
   }
+}
+
+// LOGOUT 
+export const logoutUser = async () => {
+  await signOut(auth);
 }

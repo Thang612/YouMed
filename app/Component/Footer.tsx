@@ -5,7 +5,7 @@ const YOUMED_LOGO_PATH = "/logo.svg"; // THAY ĐỔI ĐƯỜNG DẪN NÀY
 
 const Footer = () => {
     return (
-        <div className=" w-full mt-16 bg-white py-16">
+        <div className=" w-full bg-white py-16">
             <div className="container mx-auto">
                 <Link href="/" className="cursor-pointer">
                     <Image

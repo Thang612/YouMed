@@ -17,7 +17,7 @@ const Step = [{
 const Guied = () => {
     const [stepCurrent, setStepCurrent] = useState(0);
     return (
-        <div className="container mx-auto mt-28">
+        <div className="container mx-auto mt-28 my-9">
             <h2 className="text-center text-4xl font-bold mb-5">Thao tác đơn giản với 4 bước</h2>
             <div className="w-full flex flex-col md:flex-row justify-between gap-4">
                 <div className="w-full md:w-1/2">
