@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { loginUser } from "../Service/auth.service";
+import { loginUser } from "../../Service/auth.service";
 import { useRouter } from "next/navigation";
-import Spinner from "../Component/Spinner";
-import { toast } from "react-toastify";
+import Spinner from "../../Component/Spinner";
+import Link from "next/link";
+import { toast } from "sonner";
 
 const Login = () => {
     const router = useRouter()
@@ -21,7 +22,7 @@ const Login = () => {
             setIsLoading(true);
             const res = await loginUser({ email, password });
             if (res) {
-                router.push('/')
+                router.back();
                 toast.success("Đăng nhập thành công!!!")
             }
         } catch (error) {
@@ -61,7 +62,7 @@ const Login = () => {
                     }
   `}
             >{isLoading && <Spinner />}<span>{isLoading ? 'Đang xử lý...' : 'Đăng nhập'}</span></button>
-
+        <Link href="/doctor/login" className="text-blue-500 underline">Bạn là bác sĩ</Link>
         </div>
     </>)
 }

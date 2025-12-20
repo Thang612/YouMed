@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { createUser } from "../Service/auth.service"
+import { createUser } from "../../Service/auth.service"
 import { useRouter } from "next/navigation"
-import Spinner from "../Component/Spinner"
-import { toast } from "react-toastify"
+import Spinner from "../../Component/Spinner"
+import { toast } from "sonner"
 
 const Register = () => {
     const router = useRouter()

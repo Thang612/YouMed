@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link";
-import { useAuth } from "../context/AuthContext";
-import Spinner from "../Component/Spinner";
+import { useAuth } from "../../context/AuthContext";
+import Spinner from "../../Component/Spinner";
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
     const { user, loading } = useAuth();

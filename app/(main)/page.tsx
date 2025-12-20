@@ -1,10 +1,8 @@
 'use client'
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import Guied from "./Component/Guied";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "./Service/firebase";
-import Search from "./Component/Search";
+import { useState } from "react";
+import Search from "../Component/Search";
+import Guied from "../Component/Guied";
 
 const heroSectionImg = ["/herosection/doctor (1).webp", "/herosection/doctor (2).webp", "/herosection/doctor (3).webp"]
 const mainTele = "/herosection/main-tele.svg"
@@ -40,18 +38,6 @@ const icon = [{
   image: "/icon/gastroenterology.svg"
 }]
 export default function Home() {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setUser(user)
-      setLoading(false)
-    })
-    return () => unsub()
-  }, [])
-
-
   const [isReadMore, setIsReadMore] = useState(true)
 
 

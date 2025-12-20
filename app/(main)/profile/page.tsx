@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../Service/firebase";
-import { addUserInfor } from "../Service/user.service";
+import { db } from "../../Service/firebase";
+import { addUserInfor } from "../../Service/user.service";
 
 type Gender = "male" | "female" | "other";
 type City = "hn" | "hcm" | "dn";

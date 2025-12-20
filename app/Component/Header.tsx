@@ -9,11 +9,10 @@ import { logoutUser } from "../Service/auth.service";
 const YOUMED_LOGO_PATH = "/logo.svg"; 
 
 const Header = () => {
-    const {user, loading} = useAuth()
+    const {user} = useAuth()
     const route = useRouter();
     const [isOpenUser, setIsOpenUser] = useState(false);
 
-    if (loading) return null // hoặc skeleton
     return (
         <header className="w-full bg-white shadow-md sticky top-0 z-50">
             {/* Container giới hạn độ rộng, padding hai bên */}
